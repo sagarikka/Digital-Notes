@@ -1,24 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router,Routes,Route, Navigate} from 'react-router-dom';
+import LandingPage from './routes/Landing';
+import Signup from './routes/Signup';
+import Login from './routes/Login';
+import Home from './routes/Home';
+import File from './routes/File';
+import {useCookies} from 'react-cookie';
 
 function App() {
+  const [cookie,setCookie]=useCookies(["noteToken"]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+    {cookie.noteToken?
+      <Routes>
+        <Route path='*' element={<Navigate to="/" replace/>}/>
+        <Route path='/landing' element={<LandingPage/>}/>
+        <Route path='/signup' element={<Signup/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/file/:id' element={<File/>}/>
+      </Routes>:
+      <Routes>
+        <Route path="*" element={<Navigate to="/" replace/>} />
+        <Route path='/signup' element={<Signup/>}/>
+        <Route path='login'  element={<Login/>}/>
+        <Route path='/' element={<LandingPage/>}/>
+      </Routes>
+    }
+    </Router>
   );
 }
 

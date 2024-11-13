@@ -1,38 +1,546 @@
-.App {
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+}
+.btn{
+  background:rgb(235, 157, 12) ;
+  padding: 2px 8px 4px;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.338);
+  font-weight:700;
+}
+.btn-lg{
+  width: 7rem;
+  height: 2rem;
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.btn:hover{
+  background: rgb(215, 208, 208);
+  font-weight: bold;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/*----------------------LANDING PAGE----------------------*/
+.landing-page{
+  background: rgb(235, 157, 12);
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.landing_page-container{
+  width: 75%;
+  height: 75vh;
+  padding: 0.6rem 0 0 0 ;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); 
+}
+.landingpage-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 12%;
+    border: solid 0 0 1px 0 black;
+    
+    padding-bottom: 0.3rem;
+}
+.landing_header-left{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+}
+.brand_name{
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+.landing_header-right{
+  display: flex;
+  gap: 4rem;
+  width: 100%;
+  padding: 0 2rem;
+  align-items: center;
+  justify-content: end;
+}
+.landingpage-body{
+  background-image: url('./utils/landingPage_desktop.jpg');
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height:88% ;
+}
+.content{
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.text{
+  font-weight: bold;
+  font-size: 3rem;
+  font-family: "Anton", sans-serif;
+}
+.text .text-big{
+  font-size: 4rem;
+  display: block;
+  line-height: 1;
+  color: transparent; /* Make the text itself transparent */
+  -webkit-text-stroke: 2px black;
+  text-shadow: -2px -4px 5px hsla(39, 87%, 51%, 0.954);
+}
+.landing_header-right-sm{
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  right: 7rem;
+  top: 6rem;
+}
+.sm-modal{
+  position: absolute;
+  right: 2rem;
+  top: 2.5rem;
+  background: white;
+  border: solid 1px;
+  padding: 4px;
+  width: 6rem;
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+  font-weight:900 ;
+}
+.sm-modal-hidden{
+  visibility: hidden;
+}
+@media only screen and (min-width:689px) and (max-width:900px) {
+  
+  .text{
+    font-size: 2rem;
+  }
+  .text .text-big{
+    font-size: 3rem;
+  }
+}
+@media only screen and  (max-width:1024px) {
+  .landing_header-right-sm{
+    visibility:visible ;
+   
+  }
+  .landing_header-right{
+    visibility: hidden;
+  }
+}
+@media only screen and (max-width:688px){
+  .landing_header-right-sm{
+    right: 3rem;
+    top:6.3rem ;
+  }
+  .landingpage-body{
+    background-image: url('./utils/landingpage_mobile.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .content{
+    justify-content:start;
+    align-items: start;
+    position: absolute;
+    left:10rem ;
+    top: 11rem;
+  }
+  .text{
+    font-size: 2.5rem;
+  }
+  .text .text-big{
+    font-size: 3.5rem;
   }
 }
 
-.App-header {
-  background-color: #282c34;
+/*----------------------SIGNUP PAGE----------------------*/
+.signup{
+  background:linear-gradient(to right, rgb(235, 157, 12) 40.3%,transparent 30%);
+  min-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.signup-container{
+  background: white;
+  width: 65vw;
+  height: 75vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); 
+  border-radius: 0.6rem;
+}
+.signup-left-side{
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  height: 100%;
+  background: rgba(240, 202, 12, 0.861);
+  gap: 1rem;
+ 
+}
+.signup-right-side{
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  justify-content: center;
+  align-items: center;
+}
+.auth-input{
+  outline: none;
+  padding: 5px;
+  width: 13rem;
+  border: none;
+  border-bottom: 2px solid #000;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 0.6rem;
+}
+.required{
+  color: red;
+}
+.signup-login{
+  background: white;
+  padding:0.4rem 1rem;
+  border-radius: 0.4rem 0 0 0.4rem;
+  text-decoration: none;
+  font-weight: 700;
+}
+.signup-signup{
+  padding: 1rem;
+  text-decoration: none;
+  font-weight: 700;
+}
+.signup-login:hover {
+  font-weight: bold;
+}
+.signup-signup:hover {
+  font-weight: bold;
+}
+.signup-text{
+  font-weight: 500;
+}
+.line{
+  display: inline-block;
+  width: 4rem;
+  border-bottom: 2px solid;
+  margin: 3px;
+}
+@media only screen and (max-width:689px){
+  .signup{
+    background:rgb(235, 157, 12) ;
+  }
+  .signup-container{
+    background:rgba(240, 202, 12, 0.861);
+  }
+  .signup-left-side{
+    visibility: hidden;
+    position: absolute;
+  }
+  .signup-right-side{
+    position: absolute;
+  }
+  .auth-input{
+    background-color: rgba(245, 221, 98, 0.861); 
+  }
+}
+
+
+/*----------------------NAVBAR CONTAINER----------------------*/
+.nav-container{
+  display: flex;
+  flex-direction: column;
+  min-width: 100vw;
+  height: 100vh;
+}
+.nav-header{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem;
+  background: rgb(235, 157, 12);
+  height: 10%;
+}
+.nav-body{
+  display: flex;
+  width: 100%;
+  height:90% ;
+}
+.body-right{
+  min-height:100% ;
+  width: 80%;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+.body-left{
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  padding: 0 1rem ;
+  align-items: start;
+  justify-content: start;
+  width: 20%;
+  height: 100%;
+  background:rgba(240, 202, 12, 0.861) ;
+  padding: 0.8rem;
+  overflow: auto;
+  scrollbar-width: none; 
+}
+.ai-button {
+  border-top: 1px solid gray;
+  width: 100%;
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  font-weight: bold;
+  z-index: 1;
+  overflow: auto;
+  cursor: pointer;
+}
+.folder-structure{
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem; 
+  font-weight: bold;
+  color: black; /* Add space between folders/files */
+}
+
+.folder-contents {
+  margin-left: 1rem;
+  border-left: 2px solid #000;
+  padding-left: 1rem;
+  margin-bottom: 0.8rem; /* Space between folder contents */
+}
+.folder-header:hover,.file:hover,.alone-file:hover{
+  box-shadow:0 8px 30px rgba(0, 0, 0, 0.7) ;
+}
+.file {
+  font-weight: bold;
+  color: black; /* File text is black */
+}
+.alone-file{
+  font-weight: bold;
+  color: #000;
+}
+.icon {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+.bar-head{
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  position: fixed;
+  
+}
+.file-input {
+  outline: none;
+  padding: 0.5rem;
+  width: 65%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  color: black;
+  font-weight: bold;
+}
+
+.folder-header.selected {
+  color: blue; /* Highlight the selected folder */
+}
+.nav-toggle-open,.nav-toggle-close{
+  display: none;
+}
+@media only screen and (max-width: 1150px) {
+  .body-left{
+    width: 30%;
+  }
+  .body-right {
+    width: 70% ; /* Add !important to see if there is an override issue */
+  }
+}
+@media only screen and (max-width: 900px){
+  .body-left{
+    width: 40%;
+  }
+  .body-right {
+    width: 65% ; /* Add !important to see if there is an override issue */
+  }
+}
+@media (max-width:700px){
+  .body-left{
+    display: none;
+  }
+  
+  .body-right{
+    width: 100%;
+  }
+  .nav-toggle-close{
+    font-size:x-large;
+    margin: auto;
+    border:solid black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 8px;
+  }
+  .nav-toggle-open{
+    display: flex;
+    position: absolute;
+    font-size: x-large;
+    padding: 0.5rem;
+    z-index: 1;
+  }
+  .body-left-open{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    z-index: 1;
+    width:263px;
+    overflow: auto;
+    
+  }
+  .bar-head{
+    position: relative;
+  }
+}
+
+/*----------------------HOME PAGE---------------------
+-*/
+.home-container {
+  padding: 20px;
+  background: wheat;
+  min-height: 100%;
+  width: 100%;
+}
+
+.pdf-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns by default */
+  gap: 20px;
+}
+.pdf-item {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.pdf-preview {
+  width: 100%;
+  height: 250px; /* Set a default height for PDF previews */
+  border: none;
+}
+.pdf-details {
+  margin-top: 10px;
+}
+.pdf-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pdf-name {
+  font-weight: bold;
+}
+.download-icon {
+  text-decoration: none;
+  color: black;
+}
+.uploader-info {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+.uploader-avatar {
+  width: 30px;
+  height: 30px;
+  background-color: rgba(240, 202, 12, 0.861);
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-right: 10px;
+}
+.uploader-name {
+  font-size: 14px;
+}
+.upload-btn {
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: rgba(240, 202, 12, 0.861);
   color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  border: solid 1px  black;
+}
+.file-name{
+  border: solid 1px  black;
+  padding: 15px 20px;
+  border-radius: 5px;
+  margin: 20px ;
+  background-color:  rgba(240, 202, 12, 0.861);
+}
+.upload-btn:hover {
+  background-color: #b37d00;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 1150px) {
+  .pdf-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
-  to {
-    transform: rotate(360deg);
+  
+}
+
+@media (max-width: 900px) {
+  .pdf-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+@media (max-width: 480px) {
+  .pdf-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/*----------------------FILE PAGE----------------------*/
+.file-page {
+  min-height: 100vh;
+ 
+}
+@media(max-width:700px){
+  .file-page{
+    padding: 2.5rem 0 0;
   }
 }

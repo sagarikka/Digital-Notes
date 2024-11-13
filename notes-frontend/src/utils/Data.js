@@ -1,0 +1,24 @@
+export  const Data=[
+    {
+      name:'src',
+      type:'folder',
+      contents:[
+        {name:'index.js',type:'file'},
+        {
+          name:'components',
+          type:'folder',
+          contents:[{name:'Navbar.js',type:'file',fileContent:""}],
+        },
+      ],
+    },
+    {
+      name:'public',
+      type:'folder',
+      contents:[{name:'index.html',type:'file',fileContent:""}],
+    },
+    {
+      name:'app.css',
+      type:'file',
+      fileContent:""
+    }
+  ];
