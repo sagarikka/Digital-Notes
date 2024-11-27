@@ -26,26 +26,18 @@ function Folder({folder,setSelectedFolder,selectedFolder, selectedFile, onFileCl
         </div>
         {isOpen && (
             <div className='folder-contents'>
-                {folder.contents.map((item) => 
-                    item.itemType=== 'folder' ?(
-                        <Folder 
-                        key={item.item._id}
-                        folder={item.item}
-                        selectedFolder={selectedFolder} 
-                        setSelectedFolder={setSelectedFolder}
-                        onFileClick={onFileClick}
-                        selectedFile={selectedFile}/>
-                    ) : (
-                        <div key={item.item._id} className='file'>
-                            <Link to={`/file/${item.item._id}`} 
+                {
+                    folder.contents.map((item)=>{
+                       return <div key={item._id} className='file'>
+                            <Link to={`/file/${item._id}/${item.name}`} 
                             style={{textDecoration:'none', color: selectedFile === item ? '#4B0082' : 'black'}}
                             onClick={() => onFileClick(item)}
                             > 
-                            📝{item.item.name}
+                            📝{item.name}
                             </Link>
                         </div>
-                    )
-                )}
+                    })
+                }
             </div>
         )}
     </div>

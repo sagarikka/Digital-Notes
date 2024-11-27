@@ -11,4 +11,5 @@ exports.getToken =async(user)=>{
     console.log(token);
     return token;
 }
+
 module.exports=exports;

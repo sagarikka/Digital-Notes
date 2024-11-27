@@ -12,6 +12,7 @@ function NavbarContainer({children}) {
   const [selectedFile, setSelectedFile] = useState(null);
   const [newFolderStructure,setNewFolderStructure]=useState([]);
   const [error,setError]=useState(null);
+  const [selectError,setSelectError]=useState(null);
   const navigate = useNavigate();
 
 
@@ -47,17 +48,10 @@ function NavbarContainer({children}) {
       setEmpty_text(true);
       return;
     }
-    //ADD A FOLDER WITH A PARENT FOLDER
-    if(selectedFolder){
-      const newFolder =await makeAuthenticatedPostRequest("/create/folder",{name:newfile,parentFolderId:selectedFolder})
-      console.log("newFolder",newFolder)
-      setNewFolderStructure(newFolder);
-      setSelectedFolder(null);
-    } else { //FOLDER WITHOUT A PARENTFOLDER
       const newFolder =await makeAuthenticatedPostRequest("/create/folder",{name:newfile})
       console.log("newFolder",newFolder)
       setNewFolderStructure(newFolder);
-    }
+    // }
     setEmpty_text(false);
     setNewfile('');
   }
@@ -69,17 +63,15 @@ function NavbarContainer({children}) {
       return;
     }
     console.log(selectedFolder);
-    //ADD A FILE WITH A PARENTFOLDER
-    if(selectedFolder){
       const addedFile=await makeAuthenticatedPostRequest("/create/file",{name:newfile,parentFolderId:selectedFolder});
+      if(addedFile.message){
+        setSelectError(addedFile.message);
+         return;
+      }
       console.log("added file",addedFile);
+      setSelectError(null)
       setNewFolderStructure(addedFile);
       setSelectedFolder(null);
-    } else { //ADD A FILE WITHOUT A PARENT FOLDER 
-      const addedFile=await makeAuthenticatedPostRequest("/create/file",{name:newfile});
-      console.log("added file",addedFile);
-      setNewFolderStructure(addedFile);
-    }
     setEmpty_text(false)
     setNewfile('');
   }
@@ -104,10 +96,11 @@ function NavbarContainer({children}) {
               </div>
               {!folderData?<div>no document found</div>:
                 <div style={{margin:'2rem 0'}} className='folder-structure'>
-                
+                {error && <div style={{ color: 'red', fontWeight: '500' }}>{error}</div>}
+                {selectError && <div style={{ color: 'red', fontWeight: '500' }}>{selectError}</div>}
                 {empty_text && <div style={{ color: 'red', fontWeight: '500' }}>enter File/Folder name</div>}
-
-                {folderData?.folders?.map((item) => (
+    
+                {folderData?.map((item) => (
                   <Folder key={item._id}
                     folder={item}
                     setSelectedFolder={setSelectedFolder}
@@ -115,18 +108,6 @@ function NavbarContainer({children}) {
                     onFileClick={handleFileClick}
                     selectedFile={selectedFile}
                   />
-                ))}
-
-                {folderData?.files?.map((item) => (
-                  <div className='alone-file' key={item._id}>
-                    <div>
-                      <Link to={`/file/${item._id}`} 
-                            style={{ textDecoration: 'none', color: selectedFile === item ? '#4B0082' : 'black' }}
-                            onClick={() => handleFileClick(item)}>
-                        📝{item.name}
-                      </Link>
-                    </div>
-                  </div>
                 ))}
                 <div className='ai-button'><Icon icon="streamline-emojis:sunflower-2" className='header_logo' width={`20px`}/><div>AI</div></div>
                 </div>

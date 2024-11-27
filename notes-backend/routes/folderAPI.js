@@ -3,16 +3,13 @@ const passport=require('passport');
 const folder=require('../models/folder');
 const file=require('../models/file');
 
+//CREATE A NEW FOLDER
 router.post('/folder',passport.authenticate('jwt',{session:false}),async(req,res)=>{
-    const { name , parentFolderId}=req.body;
+
+    const { name } = req.body;
     const userId = req.user._id;
     try{
-        const newFolder = new folder({name,userId, itemType: 'folder' ,parentFolder:parentFolderId});
-        if(parentFolderId){
-            const parentFolder =await folder.findById(parentFolderId);
-            parentFolder.contents.push({ item: newFolder._id, itemType: 'folder' });
-            await parentFolder.save();
-        }
+        const newFolder = new folder({ name, userId });
         await newFolder.save();
         return res.status(200).json(newFolder);
     }
@@ -22,19 +19,18 @@ router.post('/folder',passport.authenticate('jwt',{session:false}),async(req,res
     }
 })
 
-// Create a new file
+// CREATE A NEW FILE
 router.post('/file', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const { name, parentFolderId } = req.body;
-    const userId = req.user.id; // Extract the user ID from the authenticated user
-
+    const userId = req.user.id; 
+    if (!parentFolderId) {
+        return res.status(400).json({ message: 'Please select a parent folder' });
+    }
     try {
-        const newFile = new file({ name, userId, parentFolder: parentFolderId  }); // Set the user ID
-
-        if (parentFolderId) {
+        const newFile = new file({ name, userId, parentFolder: parentFolderId  }); 
             const parentFolder = await folder.findById(parentFolderId);
-            parentFolder.contents.push( { item: newFile._id, itemType: 'file' } ); // Assuming contents is used for both files and folders
+            parentFolder.contents.push(newFile._id);
             await parentFolder.save();
-        }
 
         await newFile.save();
         return res.status(200).json(newFile);
@@ -43,27 +39,16 @@ router.post('/file', passport.authenticate('jwt', { session: false }), async (re
     }
 });
 
+//RETURN ALL FOLDERS
 router.get("/allfolder",passport.authenticate('jwt',{session:false}),async (req,res) => {
     const currentUser=req.user._id;
     try{
-        const folders=await folder.find({userId:currentUser,parentFolder:null}).populate('contents.item');
+        const folders = await folder.find({ userId: currentUser}).populate('contents');
         console.log(folders);
-        if(!folders){
+        if(!folders || folders.length === 0){
             return res.status(400).json({message:"No document found"});
         }
-        const filteredFolders = folders.map(folder => ({
-            ...folder.toObject(),
-            contents: folder.contents.filter(content => content.item !== null) // Keep only contents with non-null item
-        }));
-        const files=await file.find({parentFolder:null,userId:currentUser});
-        if(folders.length === 0 && files.length === 0){
-            return res.status(400).json({message:"No document found"});
-        }
-        const response={
-            folders:filteredFolders,
-            files
-        }
-        return res.status(200).json(response);
+        return res.status(200).json(folders);
     }
     catch(error){
         console.log("error during finding all post ",error);

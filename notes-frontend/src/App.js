@@ -18,7 +18,7 @@ function App() {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/' element={<Home/>}/>
-        <Route path='/file/:id' element={<File/>}/>
+        <Route path='/file/:id/:name' element={<File/>}/>
       </Routes>:
       <Routes>
         <Route path="*" element={<Navigate to="/" replace/>} />
